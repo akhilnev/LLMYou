@@ -1,0 +1,16 @@
+1. Figure out the venv sutuation
+
+2. Look at the Pinecone Doc ( Langchain ) and Embedding docs 
+
+3. Once that is set up start try with txt context given to the model and see if it works in Embedding
+
+4. Set up a pinecone embedding search ( semantic maybe ) and then use LLM to frame the output well 
+
+5. Test with prompt and see if basic chatbot works 
+
+6. Now add the tevus layer ( read docs and working of it ) and mostly load output to the model and see the 3d figure respond based on what you feed it ?
+
+7. Buid Frontend with Claude and streamlit/React and make it talk to the Backend 
+
+8. Deploy both sides of it using Heroku ( check ? ) and Vercel ( FE ? ) Check 
+
