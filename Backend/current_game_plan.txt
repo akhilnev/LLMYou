@@ -14,3 +14,7 @@
 
 8. Deploy both sides of it using Heroku ( check ? ) and Vercel ( FE ? ) Check 
 
+Notes:
+- 
+- Libraries installed in a venv -> source .venv/bin/activate ( use and download external libraries in this)
+- deactivate to set back to normal 
