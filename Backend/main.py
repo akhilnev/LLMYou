@@ -95,18 +95,15 @@ def generate_response_from_template(prompt, relevant_chunks):
     # Fill in the template
     final_prompt = template.format(prompt=prompt, relevant_chunks=relevant_chunks_text)
 
-    # Call the OpenAI API to generate the response
-    response = client.Completion.create(
-        engine="gpt-4o-mini",  # Replace with the correct model name if different
-        prompt=final_prompt,
-        max_tokens=150,  # Adjust this based on the desired response length
-        n=1,
-        stop=None,
-        temperature=0.7  # Adjust temperature for response variability
+    response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": final_prompt },
+        {"role": "user", "content": prompt}
+    ]
     )
-
     # Extract the response text
-    answer = response.choices[0].text.strip()
+    answer = response.choices[0].message.content.strip()
 
     return answer
 
