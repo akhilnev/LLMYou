@@ -8,22 +8,23 @@ from api_hits import user_details
 from textwrap import wrap
 from openai import OpenAI
 
-client = OpenAI()
 
 # Initialize the FastAPI app
 app = FastAPI()
 load_dotenv()  # Take environment variables from .env.
+openai_api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=openai_api_key)
 
 # Pinecone - Initialize and Connect to Existing Index
 pinecone_api_key = os.getenv("PINECONE_API_KEY")
 pinecone_environment = "us-east1-aws"
-pc = Pinecone(api_key= pinecone_api_key )
+pc = Pinecone(api_key= pinecone_api_key)
 
 index_name = "llmyou"  # Use the existing index name
 index = pc.Index(index_name)
 
 def create_embedding(text):
-    response = client.embeddings.create(input=[text], model="text-embedding-ada-002")
+    response = client.embeddings.create(input=[text], model="text-embedding-ada-003")
     return response.data[0].embedding
 
 def chunk_and_embed_and_upsert(document, chunk_size=500, namespace=None):
