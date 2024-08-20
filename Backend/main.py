@@ -86,7 +86,7 @@ def generate_response_from_template(prompt, relevant_chunks):
     A recruiter/employer has potentially asked you the following question about the user: {prompt} 
     Use only the following pieces of context and details about the user to answer the employer's questions about the user, and remember to speak well about the user while responding:
     {relevant_chunks}
-    NOTE: Keep the final response courteous and professional, also to the point and not too long.
+    NOTE: Keep the final response courteous and professional, also to the point and not too long, and dont always start with the same thing, be creative and vary your responses.
     """
 
     # Join the relevant chunks into a single string
