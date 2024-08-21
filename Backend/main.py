@@ -162,7 +162,7 @@ payload = {
     "conversational_context": conversational_context,
     "custom_greeting": "Hi, I am Akhil's AI. I would love to help you learn more about him!",
     "properties": {
-        "max_call_duration": 120,
+        "max_call_duration": 180,
         "participant_left_timeout": 5
     }
 }
