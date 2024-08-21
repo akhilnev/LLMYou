@@ -8,7 +8,7 @@ from api_hits import user_details
 from api_hits import prompt
 from textwrap import wrap
 from openai import OpenAI
-
+import requests
 
 # Initialize the FastAPI app
 app = FastAPI()
@@ -111,3 +111,66 @@ def generate_response_from_template(prompt, relevant_chunks):
 response = generate_response_from_template(prompt, relevant_chunks)
 
 print(response)
+
+def classify_and_organize_user_info(user_info_text):
+    # Step 1: Use GPT-4o-mini to classify and organize the information
+    classification_prompt = f"""
+    You are an AI assistant. Please classify and organize the following user information into relevant categories like 'Work Experience', 'Skills', 'Education', 'Projects', etc. 
+    Also, summarize key points under each category:
+    
+    {user_info_text}
+    """
+    
+    # Call the GPT-4o-mini model to classify and organize the text
+    response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": classification_prompt },
+    ]
+    )
+    
+    # Extract the organized text from the response
+    organized_info = response.choices[0].message.content.strip()
+    
+    return organized_info
+
+#! CONVERSATION AREA - STILL UNDER DEVELOPMENT !#
+
+
+user_details = classify_and_organize_user_info(user_details)
+
+conversational_context = f"""
+    You are a helpful assistant with access to your owner's information who you advocate for. The owner's name for now is Akhil.
+    A recruiter/employer/fellow student has potentially asked you the following question about the user, and you need to help them udnerstand more about Akhil and be adroit in your responses. Use only the following info which Akhil has provided about him
+    {user_details} 
+    """
+
+print(conversational_context)
+
+
+# Ended up making the request online through the webhook on the Tavus Website ( Bought Premium for access to 3 replicas)
+response_tavus = {"status":"training","replica_id":"r4f192f462"}
+
+# Creating a conversation with the Tavus API
+
+conversation_url_api = "https://tavusapi.com/v2/conversations"
+
+payload = {
+    "replica_id": "r79e1c033f",
+    "persona_id": "p5317866",
+    "conversation_name": "Getting User Information ",
+    "conversational_context": conversational_context,
+    "custom_greeting": "Hi, I am Akhil's AI. I would love to help you learn more about him!",
+    "properties": {
+        "max_call_duration": 120,
+        "participant_left_timeout": 5
+    }
+}
+headers = {
+    "x-api-key": os.getenv("TAVUS_API_KEY"),
+    "Content-Type": "application/json"
+}
+
+response = requests.request("POST", conversation_url_api, json=payload, headers=headers)
+
+print(f"Join the link to the meeting here: {response.text}")
