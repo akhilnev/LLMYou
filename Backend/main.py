@@ -134,7 +134,7 @@ def classify_and_organize_user_info(user_info_text):
     
     return organized_info
 
-#! CONVERSATION AREA - STILL UNDER DEVELOPMENT !#
+#! CONVERSATION AREA - WORKS :) BUT NEED TO REPLACE PERSONA ONCE MODEL IS TRAINED!  !#
 
 
 user_details = classify_and_organize_user_info(user_details)
