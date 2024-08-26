@@ -6,7 +6,10 @@ from uuid import uuid4
 from textwrap import wrap
 import os
 import requests
-from api_hits import user_details, prompt
+from testing import prompt
+from file_parser import user_details
+import uvicorn
+import json
 
 # Initialize FastAPI app and load environment variables
 app = FastAPI()
@@ -92,7 +95,8 @@ def create_tavus_conversation(conversational_context):
         "Content-Type": "application/json"
     }
     response = requests.post("https://tavusapi.com/v2/conversations", json=payload, headers=headers)
-    return response.text
+    response_data = json.loads(response.text)
+    return response_data.get("conversation_url", "No URL found")
 
 # Main execution
 if __name__ == "__main__":
@@ -115,3 +119,6 @@ if __name__ == "__main__":
     """
     tavus_response = create_tavus_conversation(conversational_context)
     print(f"Join the link to the meeting here: {tavus_response}")
+    
+    # # Run the FastAPI app
+    # uvicorn.run(app, host="0.0.0.0", port=8000)

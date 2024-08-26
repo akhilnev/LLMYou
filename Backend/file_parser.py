@@ -51,6 +51,9 @@ def parse_docx_to_string(docx_path: str) -> str:
         full_text.append(para.text)
     return '\n'.join(full_text)
 
+user_details = parse_file_to_string("AK_Resume.pdf")
+user_details += parse_file_to_string("Akhilesh_Linkedin_Resume_2024.pdf")
+
 # Example usage:
 # file_path = 'path_to_your_file.pdf' or 'path_to_your_file.docx'
 # file_text = parse_file_to_string(file_path)
