@@ -1,8 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from file_parser import parse_file_to_string, user_details
 from main import generate_response_from_template, query_pinecone_with_prompt, classify_and_organize_user_info, create_tavus_conversation
+import uvicorn
 
 app = FastAPI()
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
 
 @app.post("/generate_response")
 async def generate_response(prompt: str):
@@ -26,3 +31,6 @@ async def create_tavus_meeting():
         return {"meeting_link": tavus_response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)

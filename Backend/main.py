@@ -8,7 +8,6 @@ import os
 import requests
 from testing import prompt
 from file_parser import user_details
-import uvicorn
 import json
 
 # Initialize FastAPI app and load environment variables
@@ -119,6 +118,3 @@ if __name__ == "__main__":
     """
     tavus_response = create_tavus_conversation(conversational_context)
     print(f"Join the link to the meeting here: {tavus_response}")
-    
-    # # Run the FastAPI app
-    # uvicorn.run(app, host="0.0.0.0", port=8000)
