@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from file_parser import parse_file_to_string, user_details
-from main import generate_response_from_template, query_pinecone_with_prompt, classify_and_organize_user_info, create_tavus_conversation
+from main import generate_response_from_template, query_pinecone_with_prompt, classify_and_organize_user_info, create_tavus_conversation, chunk_and_embed_and_upsert
 import uvicorn
 
 app = FastAPI()
@@ -33,4 +33,5 @@ async def create_tavus_meeting():
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
+    # chunk_and_embed_and_upsert(classify_and_organize_user_info(user_details)) -> On adding new Information, rememeber to uncomment and run this to upload embeddings to pinecone
     uvicorn.run(app, host="0.0.0.0", port=8000)

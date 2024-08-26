@@ -24,7 +24,7 @@ index = pc.Index("llmyou")
 def create_embedding(text, model="text-embedding-3-small"):
     return client.embeddings.create(input=[text.replace("\n", " ")], model=model).data[0].embedding
 
-def chunk_and_embed_and_upsert(document, chunk_size=500, namespace="llmyou_ns"):
+def chunk_and_embed_and_upsert(document, chunk_size=100, namespace="llmyou_ns"):
     chunks = wrap(document, chunk_size)
     vectors = [
         {
@@ -100,7 +100,7 @@ def create_tavus_conversation(conversational_context):
 # Main execution
 if __name__ == "__main__":
     # Process and upsert user details
-    chunk_and_embed_and_upsert(user_details)
+    chunk_and_embed_and_upsert(classify_and_organize_user_info(user_details))
 
     # Generate response based on prompt
     relevant_chunks = query_pinecone_with_prompt(prompt)
