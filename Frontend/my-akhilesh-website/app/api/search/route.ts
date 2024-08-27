@@ -2,10 +2,24 @@ import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   const body = await request.json()
-  const query = body.query
-  
-  // Here you would typically call your actual search API
-  const result = `Here's what I found about Akhilesh related to "${query}"`
+  const prompt = body.query
 
-  return NextResponse.json({ result })
+  try {
+    const response = await fetch(`http://localhost:8000/generate_response?prompt=${encodeURIComponent(prompt)}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch response from API: ${response.status} ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    return NextResponse.json({ result: data.response })
+  } catch (error) {
+    console.error('Error fetching response:', error)
+    return NextResponse.json({ error: 'Failed to generate response' }, { status: 500 })
+  }
 }

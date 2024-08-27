@@ -66,10 +66,21 @@ def generate_response_from_template(prompt, relevant_chunks):
 
 def classify_and_organize_user_info(user_info_text):
     classification_prompt = f"""
-    You are an AI assistant. Please classify and organize the following user information into relevant categories like 'Work Experience', 'Skills', 'Education', 'Projects', etc. 
-    Also, summarize key points under each category:
-    
+    You are an AI assistant tasked with organizing and structuring user information. Please analyze the following user information and break it down into the most detailed and well-organized format possible. Follow these guidelines:
+
+    1. Identify and create main categories such as 'Work Experience', 'Skills', 'Education', 'Projects', 'Achievements', 'Certifications', etc.
+    2. Under each main category, create subcategories as needed. For example, under 'Skills', you might have 'Technical Skills', 'Soft Skills', 'Languages', etc.
+    3. For each item of information, provide as much detail as possible, including dates, locations, specific responsibilities, technologies used, etc.
+    4. Use bullet points or numbered lists to present information clearly and concisely.
+    5. If there are any notable achievements or key highlights, emphasize them.
+    6. Ensure that the information is presented in a logical and chronological order where applicable.
+    7. If there are any gaps or inconsistencies in the information provided, note them for further clarification.
+
+    Here's the user information to organize:
+
     {user_info_text}
+
+    Please provide a comprehensive and well-structured breakdown of this information.
     """
     response = client.chat.completions.create(
         model="gpt-4o-mini",

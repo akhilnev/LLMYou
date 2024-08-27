@@ -1,8 +1,27 @@
 import { NextResponse } from 'next/server'
 
 export async function POST() {
-  // Here you would typically call your actual meeting creation API
-  const meetingLink = `https://meet.example.com/${Math.random().toString(36).substring(7)}`
+  const apiUrl = 'http://localhost:8000/create_tavus_meeting'
 
-  return NextResponse.json({ meetingLink })
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // Add body if needed: body: JSON.stringify({ /* your data here */ }),
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    // Check if data.meeting_link exists, otherwise fall back to the entire data object
+    const meetingLink = data.meeting_link || data
+    return NextResponse.json({ meetingLink: meetingLink })
+  } catch (error) {
+    console.error('Error creating meeting:', error)
+    return NextResponse.json({ error: 'Failed to create meeting' }, { status: 500 })
+  }
 }

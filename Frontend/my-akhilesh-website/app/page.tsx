@@ -10,6 +10,9 @@ export default function Home() {
   const [searchResult, setSearchResult] = useState('')
   const [meetingLink, setMeetingLink] = useState('')
   const [animationOffset, setAnimationOffset] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [isSearchLoading, setIsSearchLoading] = useState(false)
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -18,7 +21,9 @@ export default function Home() {
     return () => clearInterval(intervalId)
   }, [])
 
-const handleSearch = async () => {
+  const handleSearch = async () => {
+    setIsSearchLoading(true)
+    setSearchResult('')
     try {
       const response = await fetch('/api/search', {
         method: 'POST',
@@ -32,17 +37,25 @@ const handleSearch = async () => {
     } catch (error) {
       console.error('Error fetching search results:', error)
       setSearchResult('An error occurred while fetching results.')
+    } finally {
+      setIsSearchLoading(false)
     }
   }
 
   const handleMeeting = async () => {
+    setIsLoading(true)
+    setError('')
+    setMeetingLink('')
     try {
       const response = await fetch('/api/meeting', { method: 'POST' })
       const data = await response.json()
+      if (data.error) throw new Error(data.error)
       setMeetingLink(data.meetingLink)
     } catch (error) {
       console.error('Error creating meeting:', error)
-      setMeetingLink('An error occurred while creating the meeting.')
+      setError('An error occurred while creating the meeting.')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -68,7 +81,7 @@ const handleSearch = async () => {
               }}
             ></div>
             <Image 
-              src="/placeholder.svg?height=256&width=256" 
+              src="/akhilesh-profile.jpg" 
               alt="Akhilesh's profile" 
               width={256} 
               height={256}
@@ -105,8 +118,19 @@ const handleSearch = async () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full border-gray-300 rounded-full py-3 px-6 text-lg"
             />
-            <Button onClick={handleSearch} className="w-full bg-gray-900 text-white hover:bg-gray-800 rounded-full py-3 text-lg">Search</Button>
+            <Button 
+              onClick={handleSearch} 
+              disabled={isSearchLoading}
+              className="w-full bg-gray-900 text-white hover:bg-gray-800 rounded-full py-3 text-lg"
+            >
+              {isSearchLoading ? 'Searching...' : 'Search'}
+            </Button>
           </div>
+          {isSearchLoading && (
+            <div className="mt-6 p-6 bg-white rounded-lg shadow-sm">
+              <p className="text-gray-800">Searching...</p>
+            </div>
+          )}
           {searchResult && (
             <div className="mt-6 p-6 bg-white rounded-lg shadow-sm">
               <p className="text-gray-800">{searchResult}</p>
@@ -117,7 +141,23 @@ const handleSearch = async () => {
         <section>
           <h2 className="text-3xl font-semibold mb-6">AI Clone Meeting</h2>
           <p className="mb-6 text-gray-600">Get to know Akhilesh better through an AI-powered meeting.</p>
-          <Button onClick={handleMeeting} className="w-full bg-gray-900 text-white hover:bg-gray-800 rounded-full py-3 text-lg">Create Meeting</Button>
+          <Button 
+            onClick={handleMeeting} 
+            disabled={isLoading}
+            className="w-full bg-gray-900 text-white hover:bg-gray-800 rounded-full py-3 text-lg"
+          >
+            {isLoading ? 'Creating Meeting...' : 'Create Meeting'}
+          </Button>
+          {isLoading && (
+            <div className="mt-6 p-6 bg-white rounded-lg shadow-sm">
+              <p className="text-gray-800">Creating meeting link...</p>
+            </div>
+          )}
+          {error && (
+            <div className="mt-6 p-6 bg-white rounded-lg shadow-sm">
+              <p className="text-red-600">{error}</p>
+            </div>
+          )}
           {meetingLink && (
             <div className="mt-6 p-6 bg-white rounded-lg shadow-sm">
               <p className="text-gray-800">Your meeting link: <a href={meetingLink} className="text-blue-600 hover:underline">{meetingLink}</a></p>
