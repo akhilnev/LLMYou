@@ -1,4 +1,4 @@
-import PyPDF2
+import pypdf
 import docx
 
 def parse_file_to_string(file_path: str) -> str:
@@ -30,7 +30,7 @@ def parse_pdf_to_string(pdf_path: str) -> str:
     """
     text = ""
     with open(pdf_path, 'rb') as file:
-        reader = PyPDF2.PdfReader(file)
+        reader = pypdf.PdfReader(file)
         for page in reader.pages:
             text += page.extract_text()
     return text
@@ -53,6 +53,7 @@ def parse_docx_to_string(docx_path: str) -> str:
 
 user_details = parse_file_to_string("AK_Resume.pdf")
 user_details += parse_file_to_string("Akhilesh_Linkedin_Resume_2024.pdf")
+print(user_details) 
 
 # Example usage:
 # file_path = 'path_to_your_file.pdf' or 'path_to_your_file.docx'
