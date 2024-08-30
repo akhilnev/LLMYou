@@ -43,5 +43,5 @@ async def create_tavus_meeting():
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
-    chunk_and_embed_and_upsert(classify_and_organize_user_info(user_details)) 
+    #chunk_and_embed_and_upsert(classify_and_organize_user_info(user_details)) 
     uvicorn.run(app, host="0.0.0.0", port=8000)

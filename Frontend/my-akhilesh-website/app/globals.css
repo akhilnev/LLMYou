@@ -31,3 +31,41 @@ body {
     text-wrap: balance;
   }
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@layer base {
+  :root {
+    --color-matte-black: 26 26 26;
+    --color-cream: 245 245 241;
+  }
+}
+
+@layer utilities {
+  .bg-matte-black {
+    background-color: rgb(var(--color-matte-black));
+  }
+  .text-matte-black {
+    color: rgb(var(--color-matte-black));
+  }
+  .bg-cream {
+    background-color: rgb(var(--color-cream));
+  }
+  .text-cream {
+    color: rgb(var(--color-cream));
+  }
+  .rotate-random {
+    @apply transition-transform duration-1000;
+  }
+  .cursor-none {
+    cursor: none;
+  }
+}
+
