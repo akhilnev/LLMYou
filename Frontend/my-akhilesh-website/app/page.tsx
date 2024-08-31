@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Image from 'next/image'
-import { FaLinkedin, FaTwitter, FaEnvelope, FaSearch, FaVideo, FaBriefcase } from 'react-icons/fa'
+import { FaLinkedin, FaTwitter, FaEnvelope, FaSearch, FaVideo, FaBriefcase /* , FaFileAlt */ } from 'react-icons/fa'
 import WorkTimeline from '@/components/ui/WorkTimeLine'
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
   const [meetingLink, setMeetingLink] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-  const [activeSection, setActiveSection] = useState<'search' | 'meeting' | 'timeline' | null>(null)
+  const [activeSection, setActiveSection] = useState<'search' | 'meeting' | 'timeline' /* | 'resume' */ | null>(null)
 
   const handleSearch = async () => {
     setIsLoading(true)
@@ -81,13 +81,17 @@ export default function Home() {
                 <FaSearch />
                 <span>Search</span>
               </Button>
-              <Button onClick={() => setActiveSection('meeting')} className="flex items-center space-x-2 bg-cream text-matte-black hover:bg-gray-200">
-                <FaVideo />
-                <span>AI Meeting</span>
-              </Button>
               <Button onClick={() => setActiveSection('timeline')} className="flex items-center space-x-2 bg-cream text-matte-black hover:bg-gray-200">
                 <FaBriefcase />
                 <span>Experience</span>
+              </Button>
+              {/* <Button onClick={() => setActiveSection('resume')} className="flex items-center space-x-2 bg-cream text-matte-black hover:bg-gray-200">
+                <FaFileAlt />
+                <span>Resume</span>
+              </Button> */}
+              <Button onClick={() => setActiveSection('meeting')} className="flex items-center space-x-2 bg-cream text-matte-black hover:bg-gray-200">
+                <FaVideo />
+                <span>AI Meeting</span>
               </Button>
             </div>
           </div>
@@ -135,8 +139,9 @@ export default function Home() {
 
         {activeSection === 'meeting' && (
           <div className="bg-matte-black text-cream rounded-lg shadow-lg p-8 mb-8 animate-fadeIn">
-            <h2 className="text-2xl font-semibold mb-4">AI Powered Meeting</h2>
+            <h2 className="text-2xl font-semibold mb-2">AI Powered Meeting</h2>
             <p className="mb-4 text-gray-300">Get to know Akhilesh better through a 2-3 minute AI-powered meeting.</p>
+            <p className="mb-4 text-yellow-300 text-sm">Note: API credits may be exhausted.</p>
             <Button 
               onClick={handleMeeting} 
               disabled={isLoading}
@@ -161,6 +166,20 @@ export default function Home() {
             <WorkTimeline />
           </div>
         )}
+
+        {/* {activeSection === 'resume' && (
+          <div className="bg-matte-black text-cream rounded-lg shadow-lg p-8 mb-8 animate-fadeIn">
+            <h2 className="text-2xl font-semibold mb-4">Resume</h2>
+            <div className="w-full h-[600px]">
+              <iframe 
+                src="https://drive.google.com/file/d/1YtHYGM9DUuHmSFnAGbEv7Ryg14qkFQUJ/preview" 
+                width="100%" 
+                height="100%" 
+                allow="autoplay"
+              ></iframe>
+            </div>
+          </div>
+        )} */}
       </main>
 
       <footer className="mt-auto py-4 text-center text-matte-black relative z-10">

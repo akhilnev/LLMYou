@@ -91,7 +91,7 @@ def classify_and_organize_user_info(user_info_text):
 def create_tavus_conversation(conversational_context):
     payload = {
         "replica_id": "r79e1c033f",
-        "persona_id": "p5317866",
+        "persona_id": "p9a95912",
         "conversation_name": "Getting User Information",
         "conversational_context": conversational_context,
         "custom_greeting": "Hi, I am Akhil's AI. I would love to help you learn more about him!",
@@ -106,6 +106,7 @@ def create_tavus_conversation(conversational_context):
     }
     response = requests.post("https://tavusapi.com/v2/conversations", json=payload, headers=headers)
     response_data = json.loads(response.text)
+    print(response_data)
     return response_data.get("conversation_url", "No URL found")
 
 # Main execution
