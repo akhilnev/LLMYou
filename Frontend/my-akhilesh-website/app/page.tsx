@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { FaLinkedin, FaTwitter, FaEnvelope, FaSearch, FaVideo, FaBriefcase /* , FaFileAlt */ } from 'react-icons/fa'
 import WorkTimeline from '@/components/ui/WorkTimeLine'
 
+
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResult, setSearchResult] = useState('')

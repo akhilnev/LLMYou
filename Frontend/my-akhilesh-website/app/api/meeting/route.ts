@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 export async function POST() {
-  const apiUrl = 'http://localhost:8000/create_tavus_meeting'
+  const apiUrl = 'https://llmyoubackend-production.up.railway.app/create_tavus_meeting'
 
   try {
     const response = await fetch(apiUrl, {

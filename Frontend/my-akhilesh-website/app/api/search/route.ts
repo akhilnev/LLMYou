@@ -5,7 +5,7 @@ export async function POST(request: Request) {
   const prompt = body.query
 
   try {
-    const response = await fetch(`http://localhost:8000/generate_response?prompt=${encodeURIComponent(prompt)}`, {
+    const response = await fetch(`https://llmyoubackend-production.up.railway.app/generate_response?prompt=${encodeURIComponent(prompt)}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
