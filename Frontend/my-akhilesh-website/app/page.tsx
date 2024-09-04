@@ -72,7 +72,8 @@ export default function Home() {
               alt="Akhilesh's profile" 
               width={384} 
               height={384}
-              className="object-cover"
+              className="object-cover w-full h-full"
+              priority
             />
           </div>
           
