@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 
-export async function POST() {
+export async function POST(request: Request) {
+  const body = await request.json()
   const apiUrl = 'https://llmyoubackend-production.up.railway.app/create_tavus_meeting'
   const timeoutDuration = 120000 // 120 seconds (2 minutes)
 
@@ -13,6 +14,7 @@ export async function POST() {
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(body), // Send the body received from the request
       signal: controller.signal,
     })
 
